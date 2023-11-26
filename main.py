@@ -56,14 +56,18 @@ def main(
             elif elem.tag.endswith("text"):
                 text = elem.text
             elif elem.tag.endswith("page"):
+                logging.debug(f"Processing word: {title}")
                 if title and text:
-                    c += 1
                     process_page(cursor, title, text)
+                    c += 1
+                    if c % 100_000 == 0:
+                        logging.info(f"Processed {c} word-text pairs.")
                 elem.clear()  # Clear the element to free memory
-        if c % 10000 == 0:
-            logging.info(f"Processed {c} pages")
     conn.commit()
     conn.close()
+
+    logging.info("Done! There were {c} word-text pairs in total.")
+    logging.info("Run `SELECT count(*) FROM entries;` on your db to verify.")
 
 
 if __name__ == "__main__":
