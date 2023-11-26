@@ -66,7 +66,7 @@ def main(
     conn.commit()
     conn.close()
 
-    logging.info("Done! There were {c} word-text pairs in total.")
+    logging.info(f"Done! There were {c} word-text pairs in total.")
     logging.info("Run `SELECT count(*) FROM entries;` on your db to verify.")
 
 
